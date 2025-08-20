@@ -36,59 +36,24 @@ pip install -r requirements.txt
 ```
 ## refer to the makefile to follow the usage examples
 
-# Install dependencies
-# make install
+Install dependencies
+make install
 
-# Train model with 6000 rows, 30 sec runtime
-# make train
+Train model with 6000 rows, 30 sec runtime
+make train
 
-# Analyze default test domain
-# make analyze
+Analyze default test domain
+make analyze
 
-# Analyze a custom domain
-# make analyze DOMAIN=example-botnet.com
+Analyze a custom domain
+make analyze DOMAIN=example-botnet.com
 
-# Clean everything
-# make clean
+Clean everything
+make clean
 
 ## Architecture
 
-+-------------------------+
-|   Synthetic Generator   |
-|  (length, entropy)      |
-+------------+------------+
-             |
-             v
-+-------------------------+     AutoML Leader  +----------+
-|   H2O AutoML Training   |  ----------------> |  MOJO    |
-|  balance, 5-fold, AUC   |                    |  (zip)   |
-+------------+------------+                    +----------+
-             |
-        leaderboard.csv
-             |
-             v
-+-------------------------+    predict_contributions()
-|   CLI: analyze domain   | ----------------------------+
-|  compute features       |                             |
-|  load MOJO              |                             v
-|  predict + SHAP         |                      +---------------+
-|  (optional) call Gemini |--------------------> |  GenAI Plan   |
-+-------------------------+   xai_findings      +---------------+
-
-## Project Layout
-.
-├─ data/
-│  └─ dga_dataset_train.csv          # generated
-├─ model/
-│  ├─ DGA_Leader.zip                 # exported MOJO
-│  └─ leaderboard.csv                # AutoML leaderboard
-├─ 1_train_and_export.py             # train + export
-├─ 2_analyze_domain.py               # analyze one domain
-├─ genai_prescriptions.py            # Gemini bridge
-├─ requirements.txt
-├─ Makefile
-├─ TESTING.md
-└─ .github/workflows/lint.yml        # CI linting
+![img.png](img.png)
 
 
 
