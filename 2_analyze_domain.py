@@ -11,16 +11,16 @@ Usage:
 import argparse
 from pathlib import Path
 
+import h2o
 import numpy as np
 import pandas as pd
-import h2o
 
 from genai_prescriptions import generate_playbook
-
 
 # -----------------------------
 # Feature helpers
 # -----------------------------
+
 
 def split_sld(domain: str) -> str:
     parts = domain.lower().strip().split(".")
@@ -40,6 +40,7 @@ def shannon_entropy(s: str) -> float:
 # -----------------------------
 # Main
 # -----------------------------
+
 
 def main():
     ap = argparse.ArgumentParser(description="Analyze a domain with MOJO and generate XAI+playbook")
@@ -83,7 +84,6 @@ def main():
     print(pred)
 
     # Try to derive P(dga)
-    cols = [c.lower() for c in pred.columns]
     cmap = {c.lower(): c for c in pred.columns}
     p_dga = None
 
@@ -121,17 +121,20 @@ def main():
             f"- Alert: Potential DGA domain detected.\n"
             f"- Domain: '{domain}'\n"
             f"- AI Model Explanation (local SHAP / contributions):\n"
-            f"  - Confidence P(dga) = {p_dga*100:.1f}%\n"
-            f"  - length = {features['length']} → contribution {shap_len:+.4f} ({push_dir(shap_len)})\n"
-            f"  - entropy = {features['entropy']:.3f} → contribution {shap_ent:+.4f} ({push_dir(shap_ent)})\n"
+            f"  - Confidence P(dga) = {p_dga * 100:.1f}%\n"
+            f"  - length = {features['length']} → contribution "
+            f"{shap_len:+.4f} ({push_dir(shap_len)})\n"
+            f"  - entropy = {features['entropy']:.3f} → contribution "
+            f"{shap_ent:+.4f} ({push_dir(shap_ent)})\n"
             f"  - bias/intercept = {bias:+.4f}\n"
         )
+
     except Exception as e:
         xai_findings = (
             f"- Alert: Potential DGA domain detected.\n"
             f"- Domain: '{domain}'\n"
             f"- NOTE: SHAP contributions unavailable ({e}). Proceeding with probability only.\n"
-            f"- Confidence P(dga) = {p_dga*100:.1f}%\n"
+            f"- Confidence P(dga) = {p_dga * 100:.1f}%\n"
         )
 
     print("\n=== XAI Findings (for GenAI) ===")

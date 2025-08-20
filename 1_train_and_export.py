@@ -13,10 +13,9 @@ import random
 import string
 from pathlib import Path
 
+import h2o
 import numpy as np
 import pandas as pd
-import h2o
-
 
 # -----------------------------
 # Synthetic data & features
@@ -83,9 +82,12 @@ def synth_dataset(n_legit: int, n_dga: int) -> pd.DataFrame:
 # Main
 # -----------------------------
 
+
 def main():
     ap = argparse.ArgumentParser(description="Train H2O AutoML DGA model and export MOJO")
-    ap.add_argument("--rows", type=int, default=6000, help="rows to synthesize (balanced legit/dga)")
+    ap.add_argument(
+        "--rows", type=int, default=6000, help="rows to synthesize (balanced legit/dga)"
+    )
     ap.add_argument("--runtime", type=int, default=30, help="AutoML max_runtime_secs")
     args = ap.parse_args()
 
@@ -122,6 +124,7 @@ def main():
     # STEP 3: AutoML (with safe bounds) or fallback GBM
     print("STEP 3: AutoML training")
     from h2o.automl import H2OAutoML
+
     try:
         aml = H2OAutoML(
             max_runtime_secs=args.runtime,
@@ -139,6 +142,7 @@ def main():
     except Exception as e:
         print(f"[WARN] AutoML error: {e}\n→ Falling back to a small GBM to guarantee a MOJO.")
         from h2o.estimators import H2OGradientBoostingEstimator
+
         gbm = H2OGradientBoostingEstimator(
             ntrees=60, max_depth=4, learn_rate=0.1, balance_classes=True, seed=42
         )

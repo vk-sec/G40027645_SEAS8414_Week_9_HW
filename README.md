@@ -37,19 +37,19 @@ pip install -r requirements.txt
 ## refer to the makefile to follow the usage examples
 
 Install dependencies
-make install
+- make install
 
 Train model with 6000 rows, 30 sec runtime
-make train
+- make train
 
 Analyze default test domain
-make analyze
+- make analyze
 
 Analyze a custom domain
-make analyze DOMAIN=example-botnet.com
+- make analyze DOMAIN=example-botnet.com
 
 Clean everything
-make clean
+- make clean
 
 ## Architecture
 
