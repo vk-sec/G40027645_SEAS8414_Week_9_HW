@@ -1,0 +1,14 @@
+[flake8]
+max-line-length = 100
+extend-exclude =
+    .git,
+    .github,
+    .venv,
+    venv,
+    build,
+    dist,
+    data,
+    model,
+    __pycache__
+# Add ignores if you need parity with Ruff choices (optional):
+# extend-ignore = E203,E266,E501

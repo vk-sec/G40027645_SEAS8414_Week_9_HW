@@ -1,0 +1,34 @@
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+# Ignore build artifacts, venvs, data/model outputs
+exclude = [
+  ".git",
+  ".github",
+  ".venv",
+  "venv",
+  "build",
+  "dist",
+  "data",
+  "model",
+  "__pycache__",
+]
+
+# Enable common rule sets ( Ruff already mirrors most Flake8 rules )
+lint.select = [
+  "E",  # pycodestyle errors
+  "F",  # pyflakes
+  "I",  # import sorting
+  "W",  # pycodestyle warnings
+  "UP", # pyupgrade
+  "B",  # flake8-bugbear
+]
+lint.ignore = [
+  # Add rule codes here if you need to suppress something specific.
+  # Example: "E203", "E266", "E501"
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
