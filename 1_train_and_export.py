@@ -133,7 +133,7 @@ def main():
             sort_metric="AUC",
             balance_classes=True,
             nfolds=5,
-            exclude_algos=["DeepLearning", "XGBoost"],  # avoid slow/hanging algos on some setups
+            exclude_algos=["DeepLearning", "XGBoost", "StackedEnsemble"],  # avoid slow/hanging algos on some setups
         )
         aml.train(x=x, y=y, training_frame=hf)
         leader = aml.leader

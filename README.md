@@ -1,3 +1,5 @@
+[![Lint](https://github.com/vk-sec/G40027645_SEAS8414_Week_9_HW/actions/workflows/lint.yml/badge.svg)](https://github.com/vk-sec/G40027645_SEAS8414_Week_9_HW/actions/workflows/lint.yml)
+
 # SEAS 8414 – Week 9 Homework  
 ## Detecting DGA Domains with H2O AutoML + GenAI Playbooks
 
